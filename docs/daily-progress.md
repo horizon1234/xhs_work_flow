@@ -126,3 +126,82 @@
 
 - 以后每天优先更新这个文档，再开始当天开发
 - 每周可基于每日记录再整理一份周总结
+
+---
+
+## 2026-04-29
+
+### 今日目标
+
+- 把后端从占位接口推进到真实持久化工作流
+- 打通热点到审核的最小闭环
+- 同步更新仓库文档，避免设计文档落后于代码
+
+### 今日完成
+
+- 学习：
+  - 梳理了 SQLAlchemy 2.x 在当前项目里的最小落地方式，包括 Base、Session、Model 和建表初始化
+  - 梳理了 Next.js 单页工作台如何通过 `fetch` 直接驱动 FastAPI 工作流
+- 工作：
+  - 新增数据库层 `db/base.py`、`db/session.py`
+  - 新增四个核心模型：`Hotspot`、`TopicCandidate`、`CopyVariant`、`ReviewTask`
+  - 新增选题与文案相关 schema
+  - 新增 `topics.py` 路由，打通文案生成与查询
+  - 新增 `content_pipeline.py`，实现模拟选题和文案生成
+  - 将热点和审核任务接口从内存占位改为数据库持久化
+  - 为审核任务补充通过和驳回动作
+  - 将前端首页改造成热点录入、选题生成、文案生成、审核处理三栏工作台
+  - 新增前端架构学习文档，并补齐工作区文档和前端说明文档
+
+### 关键产出
+
+- 文档：
+  - docs/learning/frontend-architecture.md
+  - docs/learning/笔记.md
+  - docs/project/README.md
+  - docs/project/system-architecture.md
+  - docs/project/api-design.md
+  - docs/project/database-schema.md
+  - docs/project/work-breakdown.md
+  - docs/daily-progress.md
+- 代码：
+  - backend/app/db/base.py
+  - backend/app/db/session.py
+  - backend/app/models/__init__.py
+  - backend/app/models/hotspot.py
+  - backend/app/models/topic_candidate.py
+  - backend/app/models/copy_variant.py
+  - backend/app/models/review_task.py
+  - backend/app/api/routes/topics.py
+  - backend/app/services/content_pipeline.py
+  - frontend/app/page.js
+- 结论：
+  - 项目已经从“文档 + 骨架”阶段进入“热点到审核最小闭环可演示”阶段
+
+### 遇到的问题
+
+- 工作区文档仍然停留在早期草案，和当前代码状态出现偏差
+- 前端说明文档没有覆盖新的三栏工作台和运行方式
+- 学习笔记文件已创建但还没有内容，无法承接当天的认知沉淀
+
+### 解决方式
+
+- 全局检索 git 新增文件，对照现有 Markdown 逐项补齐
+- 把文档表述从“计划要做”改成“当前已实现 + 后续待补”
+- 追加当日日报，记录新增模块和阶段判断
+
+### 当前进度判断
+
+- 学习进度：已从概念理解进入框架级实操，下一步要进入真实 LLM、异步任务和前端拆分
+- 项目进度：最小闭环已跑通，下一阶段重点是增强生成质量、补图片资产和引入异步工作流
+
+### 明日计划
+
+- 为 mock 内容生成链路设计真实 LLM 接入接口
+- 评估图片资产表和图片生成接口的最小实现方式
+- 继续整理前后端拆分边界，减少首页和路由文件继续膨胀
+
+### 备注
+
+- 后续每次新增文件后，都应该同步检查工作区文档是否仍然准确
+- 当前数据库为开发态 SQLite，后续如进入多环境部署，再切换到 PostgreSQL

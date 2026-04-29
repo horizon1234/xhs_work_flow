@@ -15,6 +15,7 @@ class HotspotCreate(HotspotBase):
 
 class HotspotRead(HotspotBase):
     id: int
+    summary: str | None = None
     status: str
 
     model_config = ConfigDict(from_attributes=True)
